@@ -21,3 +21,6 @@ TestResult.xml
 submit.xml
 SolutionVersion.cs
 SolutionVersion.vb
+
+src/packages/*
+!repositories.config
