@@ -10,7 +10,7 @@ namespace SqlBaseline.Tests
         public void A_roundhouse_folder_should_have_a_path()
         {
             var roundHouseFolder = new RhEntity();
-            Assert.AreEqual(roundHouseFolder.GetFolder(SqlType.Procedure), @"db\procs");
+            Assert.AreEqual(roundHouseFolder.GetFolder(SqlType.Procedure), @"db\sprocs");
         }
     }
 
@@ -23,7 +23,7 @@ namespace SqlBaseline.Tests
             switch (sqlType)
             {
                 case SqlType.Procedure:
-                    return string.Format(folder,"procs");
+                    return string.Format(folder,"sprocs");
                 case SqlType.Function:
                     return string.Format(folder, "functions");
                 default:
