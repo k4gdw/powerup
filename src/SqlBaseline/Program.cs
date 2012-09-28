@@ -14,15 +14,15 @@ namespace SqlBaseline
 
             var conn = new Configuration();
             var optionSet = ParseCommandLineOptions(conn);
-            
+
             try
             {
                 var app = new Application(conn);
 
                 optionSet.Parse(args);
-                if(!conn.IsValid)
+                if (!conn.IsValid)
                 {
-                    throw new OptionException("missing parameters","");
+                    throw new OptionException("missing parameters", "");
                 }
 
                 app.BuildEntities();
@@ -59,7 +59,13 @@ namespace SqlBaseline
                     o => configuration.ServerName = o)
                  .Add("o=|output=",
                     "The location to write the generated files.",
-                    o => configuration.OutputFolder = o);
+                    o => configuration.OutputFolder = o)
+                 .Add("u=|user=",
+                    "Username for the server to use",
+                    o=>configuration.UserName = o)
+                 .Add("p=|password=",
+                    "Password for the server to user",
+                    o=>configuration.Password = o);
             
             return optionSet;
         }
