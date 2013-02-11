@@ -5,7 +5,8 @@ bin
 obj
 _ReSharper*
 
-[Pp]ackages
+[Pp]ackages/*
+!repositories.config
 
 *.suo
 *.user 
