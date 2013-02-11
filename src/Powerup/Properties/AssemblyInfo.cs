@@ -14,15 +14,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("K4GDW Software")]
-[assembly: AssemblyCopyright("Copyright © K4GDW 2012")]
+[assembly: AssemblyCopyright("Copyright © K4GDW 2013")]
 [assembly: AssemblyTrademark("K4GDW")]
 [assembly: AssemblyProduct("PoweruP")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("1.0")]
 [assembly: AssemblyFileVersion("1.0.0")]
-[assembly: AssemblyInformationalVersion("1.0.0.2")]
-[assembly: AssemblyTitle("RecycleAppPool")]
-[assembly: AssemblyDescription("A simple console app that generates the \'anytime\' scripts for an existing databas" +
-    "e.")]
+[assembly: AssemblyInformationalVersion("1.0.0.0")]
+[assembly: AssemblyTitle("PoweruP")]
+[assembly: AssemblyDescription("A simple console app that generates the \'anytime\' scripts for an existing database.")]
 
 

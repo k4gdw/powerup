@@ -29,7 +29,7 @@
 					  AssemblyVersion="$(Major).$(Minor)"
 					  AssemblyFileVersion="$(Major).$(Minor).$(Revision)"
 					  AssemblyInformationalVersion="$(Major).$(Minor).$(Revision).$(Build)"
-					  AssemblyTitle="RecycleAppPool"
+					  AssemblyTitle="PoweruP.exe"
 					  AssemblyDescription ="A simple console app that generates the 'anytime' scripts for an existing database."
 					  Condition=" '$(Build)' != '' " />
 		
