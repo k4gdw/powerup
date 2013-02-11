@@ -7,7 +7,7 @@
 
 	<PropertyGroup>
 		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-		<BaseDir>$(MSBuildProjectDirectory)\..\src</BaseDir>
+		<BaseDir>$(MSBuildProjectDirectory)\..\src\</BaseDir>
 		<CodeDrop>$(MSBuildProjectDirectory)\..\code_drop</CodeDrop>
 		<Temp>$(MSBuildProjectDirectory)temp</Temp>
 		<Major>1</Major>

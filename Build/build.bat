@@ -13,5 +13,5 @@ IF NOT "%1"=="" (
 		)
 	)
 ) ELSE (
-	msbuild build.xml /t:Publish /p:LocalBuild=True /m
+	msbuild build.msbuild /t:Publish /p:LocalBuild=True /m
 )
