@@ -28,3 +28,4 @@ SolutionVersion.vb
 src/packages/*
 !repositories.config
 *.DotSettings.user
+Build/temp/*

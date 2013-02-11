@@ -8,8 +8,8 @@
 	<PropertyGroup>
 		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
 		<BaseDir>$(MSBuildProjectDirectory)\..\src\</BaseDir>
-		<CodeDrop>$(MSBuildProjectDirectory)\..\code_drop</CodeDrop>
-		<Temp>$(MSBuildProjectDirectory)temp</Temp>
+		<CodeDrop>$(MSBuildProjectDirectory)\..\code_drop\</CodeDrop>
+		<Temp>$(MSBuildProjectDirectory)\temp\</Temp>
 		<Major>1</Major>
 		<Minor>0</Minor>
 		<Revision>0</Revision>
@@ -67,7 +67,7 @@
 		<RemoveDir Directories="$(Temp)"
 				   ContinueOnError="true"
 				 Condition="Exists('$(Temp)')"  />
-		<MakeDir Directories="$(Temp)temp"
+		<MakeDir Directories="$(Temp)"
 				 Condition="!Exists('$(Temp)')" />
 		<Copy SourceFiles="$(BaseDir)Powerup\Properties\AssemblyInfo.cs"
 			  DestinationFolder ="$(Temp)" 
@@ -78,9 +78,9 @@
 		<Copy SourceFiles="$(Temp)AssemblyInfo.cs"
 			  DestinationFolder ="$(BaseDir)Powerup\Properties"
 			  Condition="Exists('$(Temp)AssemblyInfo.cs')" />
-		<RemoveDir Directories="$(Temp)"
+		<!--<RemoveDir Directories="$(Temp)"
 				   ContinueOnError="true"
-			  Condition="Exists('$(Temp)')" />
+			  Condition="Exists('$(Temp)')" />-->
 	</Target>
 
 	<Target Name="Build"
