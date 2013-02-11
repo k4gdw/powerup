@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+		 DefaultTargets="Build">
+	<Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
+	<UsingTask TaskName="ILMerge.MSBuild.Tasks.ILMerge"
+			   AssemblyFile="ILMerge.MSBuild.Tasks.ILMerge"/>
+
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+		<BaseDir>$(MSBuildProjectDirectory)\..\src</BaseDir>
+		<CodeDrop>$(MSBuildProjectDirectory)\..\code_drop</CodeDrop>
+		<Temp>$(MSBuildProjectDirectory)temp</Temp>
+		<Major>1</Major>
+		<Minor>0</Minor>
+		<Revision>0</Revision>
+		<Build Condition=" '$(BuildNo)' == '' ">$(BUILD_NUMBER)</Build>
+		<Build Condition=" '$(BuildNo)' != '' ">$(BuildNo)</Build>
+	</PropertyGroup>
+
+	<Target Name="Version">
+		<Message Text="Version: $(Major).$(Minor).$(Revision).$(Build)"/>
+		<AssemblyInfo CodeLanguage="C#"
+					  OutputFile="$(BaseDir)Powerup\Properties\AssemblyInfo.cs"
+					  AssemblyCompany="K4GDW Software"
+					  AssemblyCopyright="Copyright © K4GDW 2012"
+					  AssemblyTrademark="K4GDW"
+					  AssemblyProduct="PoweruP"
+					  ComVisible="False"
+					  AssemblyVersion="$(Major).$(Minor)"
+					  AssemblyFileVersion="$(Major).$(Minor).$(Revision)"
+					  AssemblyInformationalVersion="$(Major).$(Minor).$(Revision).$(Build)"
+					  AssemblyTitle="RecycleAppPool"
+					  AssemblyDescription ="A simple console app that generates the 'anytime' scripts for an existing database."
+					  Condition=" '$(Build)' != '' " />
+		
+		<TeamCitySetBuildNumber  Condition=" '$(LocalBuild)' != 'True' "
+								 BuildNumber="$(Major).$(Minor).$(Revision).$(Build)" />
+	</Target>
+
+	<Target Name="Clean">
+		<ItemGroup>
+			<BinFiles Include="$(BaseDir)bin\**\*.*" Exclude="$(BaseDir)src\PoweruP\bin\**\*.vshost.*" />
+			<BinFiles Include="$(BaseDir)obj\**\*.*" />
+		</ItemGroup>
+		<Message Text="Cleaning Binaries ..." />
+		<MakeDir Directories="$(CodeDrop)"
+				 Condition="!Exists('$(CodeDrop)')" />
+		<Delete Files="@(BinFiles)" />
+	</Target>
+
+	<Target Name="Publish"
+			DependsOnTargets="Build">
+		<Message Text="Publishing Solution..." />
+		<RemoveDir Directories="$(CodeDrop)"
+				   ContinueOnError="true" 
+				 Condition="Exists('$(CodeDrop)')"/>
+		<MakeDir Directories="$(CodeDrop)" 
+				 Condition="!Exists('$(CodeDrop)')" />
+		<ItemGroup>
+			<Binaries Include="$(BaseDir)Powerup\bin\Release\PoweruP.exe" />
+		</ItemGroup>
+		<Copy SourceFiles="@(Binaries)" 
+			  destinationFolder="$(CodeDrop)" />
+	</Target>
+
+	<Target Name="BackupSolInfo">
+		<RemoveDir Directories="$(Temp)"
+				   ContinueOnError="true"
+				 Condition="Exists('$(Temp)')"  />
+		<MakeDir Directories="$(Temp)temp"
+				 Condition="!Exists('$(Temp)')" />
+		<Copy SourceFiles="$(BaseDir)Powerup\Properties\AssemblyInfo.cs"
+			  DestinationFolder ="$(Temp)" 
+			  Condition="Exists('$(BaseDir)Powerup\Properties\AssemblyInfo.cs')" />
+	</Target>
+
+	<Target Name="RestoreSolInfo">
+		<Copy SourceFiles="$(Temp)AssemblyInfo.cs"
+			  DestinationFolder ="$(BaseDir)Powerup\Properties"
+			  Condition="Exists('$(Temp)AssemblyInfo.cs')" />
+		<RemoveDir Directories="$(Temp)"
+				   ContinueOnError="true"
+			  Condition="Exists('$(Temp)')" />
+	</Target>
+
+	<Target Name="Build"
+			DependsOnTargets="Clean">
+
+		<Message Text="$(Configuration) Building Solution.." />
+		<CallTarget Targets="BackupSolInfo"
+					Condition=" '$(BUILD_NUMBER)' == '' AND $(Build) != '' "/>
+			<CallTarget Targets="Version" />
+		<MSBuild Projects="$(BaseDir)Powerup.sln" 
+				 Targets="Build" 
+				 Properties="Configuration=$(Configuration)"/>
+		<CallTarget Targets="RestoreSolInfo"
+					Condition=" '$(BUILD_NUMBER)' == '' AND $(Build) != '' "/>
+	</Target>
+
+</Project>
